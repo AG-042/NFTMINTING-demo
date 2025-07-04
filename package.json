@@ -1,0 +1,56 @@
+{
+  "name": "nftminting-demo",
+  "version": "1.0.0",
+  "description": "NFT Minting Platform with Solidity, Next.js, Django, and IPFS",
+  "main": "index.js",
+  "scripts": {
+    "compile": "npx hardhat compile",
+    "test": "npx hardhat test",
+    "deploy:localhost": "npx hardhat run scripts/deploy.js --network localhost",
+    "deploy:sepolia": "npx hardhat run scripts/deploy.js --network sepolia",
+    "deploy:goerli": "npx hardhat run scripts/deploy.js --network goerli",
+    "verify:sepolia": "npx hardhat verify --network sepolia",
+    "node": "npx hardhat node",
+    "clean": "npx hardhat clean",
+    "coverage": "npx hardhat coverage",
+    "gas-report": "REPORT_GAS=true npx hardhat test",
+    "lint": "npx prettier --write 'contracts/**/*.sol' && npx solhint 'contracts/**/*.sol'",
+    "size": "npx hardhat size-contracts"
+  },
+  "keywords": [
+    "nft",
+    "ethereum",
+    "solidity",
+    "hardhat",
+    "openzeppelin",
+    "ipfs",
+    "web3"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-chai-matchers": "^2.0.0",
+    "@nomicfoundation/hardhat-ethers": "^3.0.0",
+    "@nomicfoundation/hardhat-network-helpers": "^1.0.0",
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "@nomicfoundation/hardhat-verify": "^2.0.0",
+    "@typechain/ethers-v6": "^0.5.0",
+    "@typechain/hardhat": "^9.0.0",
+    "@types/chai": "^4.2.0",
+    "@types/mocha": ">=9.1.0",
+    "chai": "^4.2.0",
+    "ethers": "^6.4.0",
+    "hardhat": "^2.19.0",
+    "hardhat-gas-reporter": "^1.0.8",
+    "prettier": "^2.8.0",
+    "prettier-plugin-solidity": "^1.1.0",
+    "solhint": "^4.0.0",
+    "solidity-coverage": "^0.8.1",
+    "typechain": "^8.3.0",
+    "typescript": ">=4.5.0"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.9.6",
+    "dotenv": "^16.3.1"
+  }
+}
