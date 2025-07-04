@@ -58,7 +58,7 @@ export async function uploadNFTViaBackend(
     });
     
     // Get backend URL from environment
-    const backendUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8000';
+    const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
     
     // Upload to Django backend - use create-nft endpoint for complete NFT creation
     const response = await fetch(`${backendUrl}/api/create-nft/`, {
