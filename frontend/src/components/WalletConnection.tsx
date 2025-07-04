@@ -61,39 +61,41 @@ export default function WalletConnection({
   }
 
   return (
-    <div className="flex items-center space-x-3">
+    <div className="flex items-center space-x-2 sm:space-x-3">
       {/* Network Status */}
       {!isCorrectNetwork && (
         <div className="flex items-center space-x-2">
-          <div className="flex items-center px-3 py-1 text-xs font-medium text-red-700 bg-red-100 rounded-full">
-            <AlertTriangleIcon className="mr-1 h-3 w-3" />
-            Wrong Network
+          <div className="flex items-center px-2 sm:px-3 py-1 text-xs font-medium text-red-700 bg-red-100 rounded-full">
+            <AlertTriangleIcon className="mr-1 h-3 w-3 flex-shrink-0" />
+            <span className="hidden sm:inline">Wrong Network</span>
+            <span className="sm:hidden">Wrong Net</span>
           </div>
           <button
             onClick={handleSwitchNetwork}
-            className="px-3 py-1 text-xs font-medium text-blue-700 bg-blue-100 hover:bg-blue-200 rounded-full transition-colors duration-200"
+            className="px-2 sm:px-3 py-1 text-xs font-medium text-blue-700 bg-blue-100 hover:bg-blue-200 rounded-full transition-colors duration-200"
           >
-            Switch to {targetNetwork.name}
+            <span className="hidden sm:inline">Switch to {targetNetwork.name}</span>
+            <span className="sm:hidden">Switch</span>
           </button>
         </div>
       )}
 
       {/* Current Network Display */}
-      <div className="hidden sm:flex items-center px-3 py-1 text-xs font-medium text-gray-700 bg-gray-100 rounded-full">
+      <div className="hidden md:flex items-center px-3 py-1 text-xs font-medium text-gray-700 bg-gray-100 rounded-full">
         <div className={clsx(
-          "w-2 h-2 rounded-full mr-2",
+          "w-2 h-2 rounded-full mr-2 flex-shrink-0",
           isCorrectNetwork ? "bg-green-400" : "bg-red-400"
         )} />
-        {networkName}
+        <span className="truncate max-w-20">{networkName}</span>
       </div>
 
       {/* Wallet Menu */}
       <Menu as="div" className="relative">
-        <Menu.Button className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200">
-          <WalletIcon className="mr-2 h-4 w-4" />
-          <span className="hidden sm:inline">{formatAddress(account!)}</span>
+        <Menu.Button className="inline-flex items-center px-3 sm:px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200">
+          <WalletIcon className="mr-1 sm:mr-2 h-4 w-4" />
+          <span className="hidden sm:inline truncate max-w-24 lg:max-w-none">{formatAddress(account!)}</span>
           <span className="sm:hidden">Connected</span>
-          <ChevronDownIcon className="ml-2 h-4 w-4" />
+          <ChevronDownIcon className="ml-1 sm:ml-2 h-4 w-4" />
         </Menu.Button>
 
         <Transition
@@ -105,12 +107,12 @@ export default function WalletConnection({
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+          <Menu.Items className="absolute right-0 z-10 mt-2 w-64 sm:w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
             <div className="py-1">
               {/* Account Info */}
               <div className="px-4 py-3 border-b border-gray-100">
                 <p className="text-sm font-medium text-gray-900">Connected Account</p>
-                <p className="text-xs text-gray-500 font-mono">{account}</p>
+                <p className="text-xs text-gray-500 font-mono break-all">{account}</p>
               </div>
 
               {/* Copy Address */}

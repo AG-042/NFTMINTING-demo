@@ -6,8 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "export": "next export",
-    "build:export": "next build && next export",
+    "build:cloudflare": "next build && cp _redirects out/",
     "lint": "next lint",
     "type-check": "tsc --noEmit"
   },

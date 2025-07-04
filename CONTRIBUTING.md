@@ -12,7 +12,7 @@ We welcome contributions from the community! This document provides guidelines f
 
 ### Development Setup
 1. Fork the repository
-2. Clone your fork: `git clone https://github.com/yourusername/NFTMINTING-demo.git`
+2. Clone your fork: `git clone https://github.com/AG-042/NFTMINTING-demo.git`
 3. Follow the setup instructions in the main README
 4. Create a feature branch: `git checkout -b feature/your-feature-name`
 
@@ -60,8 +60,8 @@ For new features:
 
 ## 📞 Questions?
 
-- Join our Discord: [Link]
-- Email: [Your Email]
-- Twitter: [Your Twitter]
+
+- Email: nwobodochiagoziestanley@gmail.com
+- Twitter: https://x.com/AG_SZN_042
 
 Thank you for contributing! 🙏

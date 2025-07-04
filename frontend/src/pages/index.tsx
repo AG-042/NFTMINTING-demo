@@ -257,58 +257,60 @@ export default function MintPage() {
   const isCorrectNetwork = chainId === parseInt(process.env.NEXT_PUBLIC_CHAIN_ID || '11155111');
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 responsive-container">
       <Toaster position="top-right" />
       
       {/* Header */}
       <header className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 safe-area-padding">
           <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-2">
-              <ImageIcon className="h-8 w-8 text-blue-600" />
-              <h1 className="text-xl font-bold text-gray-900">NFT Minting Platform</h1>
+            <div className="flex items-center space-x-2 min-w-0">
+              <ImageIcon className="h-6 w-6 sm:h-8 sm:w-8 text-blue-600 flex-shrink-0" />
+              <h1 className="text-lg sm:text-xl font-bold text-gray-900 truncate">NFT Minting Platform</h1>
             </div>
             
-            <WalletConnection
-              isConnected={isConnected}
-              account={account}
-              onConnect={connectWallet}
-              onDisconnect={disconnectWallet}
-            />
+            <div className="flex-shrink-0">
+              <WalletConnection
+                isConnected={isConnected}
+                account={account}
+                onConnect={connectWallet}
+                onDisconnect={disconnectWallet}
+              />
+            </div>
           </div>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 safe-area-padding">
         {!isConnected ? (
-          <div className="text-center py-12">
+          <div className="text-center py-8 sm:py-12">
             <Wallet className="mx-auto h-12 w-12 text-gray-400 mb-4" />
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Connect Your Wallet</h2>
-            <p className="text-gray-600 mb-6">
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">Connect Your Wallet</h2>
+            <p className="text-sm sm:text-base text-gray-600 mb-6 px-4 prevent-overflow">
               Connect your wallet to start minting NFTs on the {process.env.NEXT_PUBLIC_NETWORK_NAME} network
             </p>
             <button
               onClick={connectWallet}
-              className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 border border-transparent text-sm sm:text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
             >
-              <Wallet className="mr-2 h-5 w-5" />
+              <Wallet className="mr-2 h-4 sm:h-5 w-4 sm:w-5" />
               Connect Wallet
             </button>
           </div>
         ) : !isCorrectNetwork ? (
-          <div className="text-center py-12">
+          <div className="text-center py-8 sm:py-12">
             <AlertCircle className="mx-auto h-12 w-12 text-red-400 mb-4" />
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Wrong Network</h2>
-            <p className="text-gray-600 mb-6">
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">Wrong Network</h2>
+            <p className="text-sm sm:text-base text-gray-600 mb-6 px-4 prevent-overflow">
               Please switch to the {process.env.NEXT_PUBLIC_NETWORK_NAME} network to mint NFTs
             </p>
           </div>
         ) : !isContractReady ? (
-          <div className="text-center py-12">
+          <div className="text-center py-8 sm:py-12">
             <Loader2 className="mx-auto h-12 w-12 text-blue-400 animate-spin mb-4" />
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Loading Contract</h2>
-            <p className="text-gray-600 mb-6">
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">Loading Contract</h2>
+            <p className="text-sm sm:text-base text-gray-600 mb-6 px-4 prevent-overflow">
               Connecting to the NFT contract...
             </p>
           </div>
@@ -321,17 +323,17 @@ export default function MintPage() {
           />
         ) : (
           <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-            <div className="px-6 py-4 border-b border-gray-200">
-              <h2 className="text-xl font-semibold text-gray-900">Mint Your NFT</h2>
-              <p className="text-sm text-gray-600 mt-1">
+            <div className="px-4 sm:px-6 py-4 border-b border-gray-200">
+              <h2 className="text-lg sm:text-xl font-semibold text-gray-900">Mint Your NFT</h2>
+              <p className="text-sm text-gray-600 mt-1 prevent-overflow">
                 Upload an image and add metadata to create your unique NFT
               </p>
             </div>
 
-            <div className="p-6">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="p-4 sm:p-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
                 {/* Left Column - Image Upload */}
-                <div>
+                <div className="w-full">
                   <ImageUpload
                     onImageSelect={handleImageSelect}
                     imagePreview={imagePreview}
@@ -340,7 +342,7 @@ export default function MintPage() {
                 </div>
 
                 {/* Right Column - Metadata Form */}
-                <div>
+                <div className="w-full">
                   <MintingForm
                     nftData={nftData}
                     quantity={quantity}
@@ -356,12 +358,12 @@ export default function MintPage() {
 
               {/* Error Display */}
               {mintingState.error && (
-                <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded-md">
+                <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-red-50 border border-red-200 rounded-md">
                   <div className="flex">
-                    <AlertCircle className="h-5 w-5 text-red-400" />
-                    <div className="ml-3">
+                    <AlertCircle className="h-5 w-5 text-red-400 flex-shrink-0" />
+                    <div className="ml-3 min-w-0 flex-1">
                       <h3 className="text-sm font-medium text-red-800">Minting Failed</h3>
-                      <p className="mt-1 text-sm text-red-700">{mintingState.error}</p>
+                      <p className="mt-1 text-sm text-red-700 break-words">{mintingState.error}</p>
                     </div>
                   </div>
                 </div>
@@ -369,10 +371,10 @@ export default function MintPage() {
 
               {/* Progress Indicator */}
               {(mintingState.isUploading || mintingState.isMinting) && (
-                <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-md">
-                  <div className="flex items-center">
-                    <Loader2 className="h-5 w-5 text-blue-600 animate-spin" />
-                    <div className="ml-3">
+                <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-blue-50 border border-blue-200 rounded-md">
+                  <div className="flex items-start">
+                    <Loader2 className="h-5 w-5 text-blue-600 animate-spin flex-shrink-0 mt-0.5" />
+                    <div className="ml-3 min-w-0 flex-1">
                       <h3 className="text-sm font-medium text-blue-800">
                         {mintingState.isUploading ? 'Uploading to IPFS...' : 'Minting NFT...'}
                       </h3>

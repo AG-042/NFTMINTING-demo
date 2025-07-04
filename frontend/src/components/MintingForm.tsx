@@ -141,9 +141,9 @@ export default function MintingForm({
             No attributes added yet. Click "Add Trait" to add properties to your NFT.
           </p>
         ) : (
-          <div className="space-y-3">
+          <div className="space-y-3 max-h-60 overflow-y-auto">
             {(nftData.attributes || []).map((attribute, index) => (
-              <div key={index} className="flex gap-3 items-center">
+              <div key={index} className="flex flex-col sm:flex-row gap-2 sm:gap-3 sm:items-center">
                 <input
                   type="text"
                   placeholder="Trait type (e.g., Color)"
@@ -164,7 +164,7 @@ export default function MintingForm({
                   type="button"
                   onClick={() => removeAttribute(index)}
                   disabled={isLoading}
-                  className="p-2 text-red-600 hover:text-red-800 hover:bg-red-50 rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="self-center sm:self-auto p-2 text-red-600 hover:text-red-800 hover:bg-red-50 rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <Minus className="h-4 w-4" />
                 </button>
@@ -205,27 +205,27 @@ export default function MintingForm({
 
       {/* Contract Info */}
       {contractInfo && (
-        <div className="bg-gray-50 rounded-lg p-4 space-y-2">
+        <div className="bg-gray-50 rounded-lg p-4 space-y-3">
           <h4 className="text-sm font-medium text-gray-900 flex items-center">
-            <Info className="h-4 w-4 mr-2" />
+            <Info className="h-4 w-4 mr-2 flex-shrink-0" />
             Minting Information
           </h4>
-          <div className="grid grid-cols-2 gap-4 text-sm">
-            <div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+            <div className="flex justify-between sm:block">
               <span className="text-gray-600">Price per NFT:</span>
-              <span className="ml-2 font-medium">{contractInfo.mintPrice} ETH</span>
+              <span className="ml-2 sm:ml-0 font-medium break-all">{contractInfo.mintPrice} ETH</span>
             </div>
-            <div>
+            <div className="flex justify-between sm:block">
               <span className="text-gray-600">Total Cost:</span>
-              <span className="ml-2 font-medium">{mintCost} ETH</span>
+              <span className="ml-2 sm:ml-0 font-medium break-all">{mintCost} ETH</span>
             </div>
-            <div>
+            <div className="flex justify-between sm:block">
               <span className="text-gray-600">Remaining Supply:</span>
-              <span className="ml-2 font-medium">{contractInfo.remainingSupply}</span>
+              <span className="ml-2 sm:ml-0 font-medium">{contractInfo.remainingSupply}</span>
             </div>
-            <div>
+            <div className="flex justify-between sm:block">
               <span className="text-gray-600">Your Minted:</span>
-              <span className="ml-2 font-medium">{userMintedCount}/{contractInfo.maxPerWallet}</span>
+              <span className="ml-2 sm:ml-0 font-medium">{userMintedCount}/{contractInfo.maxPerWallet}</span>
             </div>
           </div>
         </div>

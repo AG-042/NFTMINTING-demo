@@ -80,7 +80,7 @@ export default function ImageUpload({ onImageSelect, imagePreview, isUploading }
       {!imagePreview ? (
         <div
           className={clsx(
-            "relative border-2 border-dashed rounded-lg p-8 text-center transition-colors duration-200 cursor-pointer",
+            "relative border-2 border-dashed rounded-lg p-6 sm:p-8 text-center transition-colors duration-200 cursor-pointer",
             isDragOver
               ? "border-blue-400 bg-blue-50"
               : "border-gray-300 hover:border-gray-400",
@@ -107,11 +107,11 @@ export default function ImageUpload({ onImageSelect, imagePreview, isUploading }
             </div>
           ) : (
             <div className="flex flex-col items-center">
-              <Upload className="h-12 w-12 text-gray-400 mb-4" />
-              <p className="text-lg font-medium text-gray-900 mb-2">
+              <Upload className="h-10 w-10 sm:h-12 sm:w-12 text-gray-400 mb-4" />
+              <p className="text-base sm:text-lg font-medium text-gray-900 mb-2">
                 Drop your image here, or click to browse
               </p>
-              <p className="text-sm text-gray-500">
+              <p className="text-xs sm:text-sm text-gray-500">
                 JPG, PNG, GIF, SVG up to 10MB
               </p>
             </div>
@@ -119,7 +119,7 @@ export default function ImageUpload({ onImageSelect, imagePreview, isUploading }
         </div>
       ) : (
         <div className="relative">
-          <div className="relative aspect-square rounded-lg overflow-hidden bg-gray-100">
+          <div className="relative aspect-square w-full max-w-md mx-auto rounded-lg overflow-hidden bg-gray-100">
             <img
               src={imagePreview}
               alt="NFT Preview"

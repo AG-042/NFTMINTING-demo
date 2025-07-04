@@ -436,46 +436,149 @@ black backend/                        # Python formatting
 pylint backend/                       # Python linting
 ```
 
-## 📊 Development Workflow & CI/CD
+## 🚀 Production Deployment
 
-### Git Workflow
-```bash
-# Feature Development
-git checkout -b feature/advanced-batch-minting
-git commit -m "feat: implement batch minting with gas optimization"
-git push origin feature/advanced-batch-minting
+### Render.com Deployment (Recommended)
 
-# Production Deployment
-git checkout main
-git merge feature/advanced-batch-minting
-git tag v1.2.0
-git push origin main --tags
-```
+This project is configured for seamless deployment on Render.com with the included `render.yaml` configuration.
 
-### Continuous Integration (GitHub Actions)
+#### Quick Deploy
+1. **Fork/Clone Repository**
+   ```bash
+   git clone https://github.com/AG-042/NFTMINTING-demo.git
+   cd NFTMINTING-demo
+   ```
+
+2. **Connect to Render**
+   - Sign up at [render.com](https://render.com)
+   - Connect your GitHub repository
+   - Select "Blueprint" and Render will auto-detect the `render.yaml`
+
+3. **Environment Variables**
+   ```bash
+   # Required secrets in Render dashboard
+   DJANGO_SECRET_KEY=your_256_bit_secret_key
+   FILEBASE_ACCESS_KEY=your_filebase_access_key
+   FILEBASE_SECRET_KEY=your_filebase_secret_key
+   NEXT_PUBLIC_REOWN_PROJECT_ID=your_reown_project_id
+   ```
+
+4. **Deploy**
+   - Services deploy automatically
+   - PostgreSQL database provisioned
+   - SSL certificates auto-generated
+
+#### Manual Configuration
 ```yaml
-# .github/workflows/ci.yml
-name: CI/CD Pipeline
-on: [push, pull_request]
-
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-      - name: Setup Python
-        uses: actions/setup-python@v3
-      - name: Run Tests
-        run: |
-          npm test
-          cd backend && python manage.py test
-      - name: Deploy to Staging
-        if: github.ref == 'refs/heads/main'
-        run: |
-          ./scripts/deploy-staging.sh
+# render.yaml (included in repo)
+services:
+  - type: pserv
+    name: nft-minting-db
+    env: docker
+    plan: free
+    
+  - type: web
+    name: nft-minting-backend
+    env: python3
+    buildCommand: cd backend && ./build.sh
+    startCommand: cd backend && gunicorn nft_backend.wsgi:application
+    
+  - type: static
+    name: nft-minting-frontend
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: frontend/out
 ```
+
+### Alternative Deployment Options
+
+#### Vercel (Frontend) + Railway (Backend)
+```bash
+# Frontend deployment
+cd frontend
+vercel --prod
+
+# Backend deployment  
+cd backend
+railway up
+```
+
+#### AWS ECS (Container Orchestration)
+```dockerfile
+# Dockerfile.backend
+FROM python:3.11-slim
+WORKDIR /app
+COPY backend/requirements.txt .
+RUN pip install -r requirements.txt
+COPY backend/ .
+CMD ["gunicorn", "nft_backend.wsgi:application", "--bind", "0.0.0.0:8000"]
+```
+
+#### Docker Compose (Local Production)
+```yaml
+# docker-compose.prod.yml
+version: '3.8'
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: nft_minting_db
+      
+  backend:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile.prod
+    depends_on:
+      - db
+      
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.prod
+    depends_on:
+      - backend
+      
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - frontend
+      - backend
+```
+
+### Deployment Checklist
+
+- [ ] **Environment Variables Secured** - All sensitive data in environment vars
+- [ ] **Database Migrated** - `python manage.py migrate` completed
+- [ ] **Static Files Collected** - `collectstatic` for Django admin
+- [ ] **SSL Certificates** - HTTPS enabled (automatic on Render)
+- [ ] **Custom Domain** - DNS configured for production URLs
+- [ ] **Monitoring Setup** - Error tracking and performance monitoring
+- [ ] **Backup Strategy** - Database backups scheduled
+- [ ] **Load Testing** - Performance validated under load
+
+### Production URLs
+- **Backend API**: `https://nft-minting-backend.onrender.com`
+- **Frontend**: `https://nft-minting-frontend.onrender.com`
+- **Admin Panel**: `https://nft-minting-backend.onrender.com/admin/`
+
+### Post-Deployment Verification
+```bash
+# Health checks
+curl https://nft-minting-backend.onrender.com/api/test/
+curl https://nft-minting-frontend.onrender.com
+
+# Database connection
+python manage.py shell
+>>> from django.db import connection
+>>> connection.ensure_connection()
+
+# IPFS functionality
+python manage.py test_filebase
+```
+
+For detailed deployment instructions, see [DEPLOYMENT.md](./DEPLOYMENT.md).
 
 ## 📈 Performance Metrics
 
