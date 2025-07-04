@@ -63,23 +63,26 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'nft_backend.wsgi.application'
 
-# Database - PostgreSQL Configuration
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DB_NAME', default='nft_minting_db'),
-        'USER': config('DB_USER', default=os.getenv('USER')),
-        'PASSWORD': config('DB_PASSWORD', default=''),
-        'HOST': config('DB_HOST', default='localhost'),
-        'PORT': config('DB_PORT', default='5432'),
-    }
-}
+# Database Configuration
+DATABASE_URL = config('DATABASE_URL', default='sqlite:///db.sqlite3')
 
-# If DATABASE_URL is provided (for production), use it
-DATABASE_URL = config('DATABASE_URL', default='')
 if DATABASE_URL:
     import dj_database_url
-    DATABASES['default'] = dj_database_url.parse(DATABASE_URL)
+    DATABASES = {
+        'default': dj_database_url.parse(DATABASE_URL)
+    }
+else:
+    # Fallback PostgreSQL Configuration
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': config('DB_NAME', default='nft_minting_db'),
+            'USER': config('DB_USER', default=os.getenv('USER')),
+            'PASSWORD': config('DB_PASSWORD', default=''),
+            'HOST': config('DB_HOST', default='localhost'),
+            'PORT': config('DB_PORT', default='5432'),
+        }
+    }
 
 
 # Password validation

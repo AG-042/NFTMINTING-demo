@@ -6,6 +6,7 @@ from django.utils import timezone
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
+from django.db import connection
 import uuid
 import time
 import logging
@@ -29,8 +30,36 @@ def test_api(request):
     return JsonResponse({
         'success': True,
         'message': 'NFT API is working!',
+        'timestamp': timezone.now().isoformat(),
         'version': '1.0.0'
     })
+
+# Health check endpoint for deployment
+def health_check(request):
+    """Health check endpoint for monitoring and deployment verification"""
+    try:
+        # Check IPFS service configuration
+        ipfs_configured = all([
+            settings.FILEBASE_ACCESS_KEY,
+            settings.FILEBASE_SECRET_KEY,
+            settings.FILEBASE_BUCKET_NAME
+        ])
+        
+        return JsonResponse({
+            'status': 'healthy',
+            'timestamp': timezone.now().isoformat(),
+            'services': {
+                'ipfs': 'configured' if ipfs_configured else 'not_configured'
+            },
+            'environment': 'production' if not settings.DEBUG else 'development'
+        })
+    except Exception as e:
+        logger.error(f"Health check failed: {str(e)}")
+        return JsonResponse({
+            'status': 'unhealthy',
+            'error': str(e),
+            'timestamp': timezone.now().isoformat()
+        }, status=500)
 
 # Simple image upload test view  
 @csrf_exempt

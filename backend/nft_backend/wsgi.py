@@ -11,6 +11,10 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'nft_backend.settings')
+# Use production settings on Render
+if os.environ.get('RENDER'):
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'nft_backend.settings_production')
+else:
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'nft_backend.settings')
 
 application = get_wsgi_application()

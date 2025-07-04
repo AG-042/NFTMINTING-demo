@@ -4,7 +4,8 @@ from . import views
 app_name = 'nfts'
 
 urlpatterns = [
-    # Test endpoints
+    # Health check and test endpoints
+    path('health/', views.health_check, name='health'),
     path('test/', views.test_api, name='test'),
     path('upload-image-test/', views.upload_image_test, name='upload-image-test'),
     
