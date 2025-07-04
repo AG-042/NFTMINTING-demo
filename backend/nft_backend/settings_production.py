@@ -37,6 +37,7 @@ SECURE_HSTS_PRELOAD = True
 # CORS settings for production
 CORS_ALLOWED_ORIGINS = [
     "https://nft-minting-frontend.onrender.com",
+    "https://nftminting-demo.pages.dev",
     "http://localhost:3000",
     "http://127.0.0.1:3000",
 ]
