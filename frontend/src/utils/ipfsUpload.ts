@@ -24,8 +24,6 @@ export async function uploadNFTToIPFS(
   attributes: NFTAttribute[] = []
 ): Promise<UploadResult> {
   try {
-    console.log('🚀 Starting NFT upload via Django backend...');
-    
     // Validate inputs
     if (!imageFile) {
       throw new Error('No image file provided');
@@ -52,8 +50,6 @@ export async function uploadNFTToIPFS(
       throw new Error(`Backend connection failed: ${connectionTest.error}`);
     }
 
-    console.log('✅ Backend connection successful');
-
     // For now, use a default owner address - in real app this would come from wallet
     const defaultOwnerAddress = '0x0000000000000000000000000000000000000000';
 
@@ -78,8 +74,6 @@ export async function uploadNFTToIPFS(
     if (!result.metadata_ipfs_hash || !result.metadata_ipfs_url) {
       throw new Error('Backend failed to return metadata IPFS data');
     }
-
-    console.log('✅ NFT upload completed successfully via backend');
 
     return {
       imageUpload: {

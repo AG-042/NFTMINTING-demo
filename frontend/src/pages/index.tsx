@@ -92,6 +92,15 @@ export default function MintPage() {
     }));
   };
 
+  const handleImageClear = () => {
+    setImageFile(null);
+    setImagePreview('');
+    setNftData(prev => ({
+      ...prev,
+      image: null,
+    }));
+  };
+
   const handleMetadataChange = (field: keyof NFTMetadata, value: any) => {
     setNftData(prev => ({
       ...prev,
@@ -336,6 +345,7 @@ export default function MintPage() {
                 <div className="w-full">
                   <ImageUpload
                     onImageSelect={handleImageSelect}
+                    onImageClear={handleImageClear}
                     imagePreview={imagePreview}
                     isUploading={mintingState.isUploading}
                   />

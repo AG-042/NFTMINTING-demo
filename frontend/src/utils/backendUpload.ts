@@ -22,8 +22,6 @@ export async function uploadNFTViaBackend(
   ownerAddress: string
 ): Promise<BackendUploadResult> {
   try {
-    console.log('🚀 Starting NFT upload via Django backend...');
-    
     // Validate inputs
     if (!imageFile) {
       throw new Error('No image file provided');
@@ -49,16 +47,8 @@ export async function uploadNFTViaBackend(
       formData.append('attributes', JSON.stringify(attributes));
     }
     
-    console.log('📤 Uploading to backend...', {
-      filename: imageFile.name,
-      size: imageFile.size,
-      name,
-      description,
-      attributesCount: attributes.length
-    });
-    
     // Get backend URL from environment
-    const backendUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8000';
+    const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
     
     // Upload to Django backend - use create-nft endpoint for complete NFT creation
     const response = await fetch(`${backendUrl}/api/create-nft/`, {
@@ -84,8 +74,6 @@ export async function uploadNFTViaBackend(
       console.error('❌ Backend upload error:', result);
       throw new Error(result.error || 'Backend upload failed');
     }
-    
-    console.log('✅ Backend upload successful:', result);
     
     // Validate that we got real IPFS hashes - NO FALLBACKS
     if (!result.image_ipfs_hash || !result.image_ipfs_url) {
